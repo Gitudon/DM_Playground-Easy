@@ -1,8 +1,7 @@
 import json
-import codecs
 
 def build(path):
-    file=open('GUI/game/cardlist.json','r',encoding="utf_8")
+    file=open('resources/cards/cardlist.json','r',encoding="utf_8")
     loading=json.load(file)
     deck=[]
     card=[]

@@ -2,20 +2,11 @@ import random
 import pygame
 import time
 import sys
-import json
-import pickle
-
-#定数の設定
-width=100
-height=144
-field=(1550,1000)
-fieldcolor=(0,200,0)
-upbase=(230, 155)
-downbase=(920, 696)
-base=(100,100)
+from consts.CONSTS import *
+from consts.PATHS import *
 
 def deck(screen,me,opposite):
-    img = pygame.image.load("GUI/image/uramen/ura.jpg")
+    img = pygame.image.load(path_to_uramen+"ura.jpg")
     if len(me)>0:
         img = pygame.transform.scale(img, (width, height))
         screen.blit(img, downbase)
@@ -26,18 +17,18 @@ def deck(screen,me,opposite):
 
 def dimension(screen,me,opposite):
     if len(me)>0:
-        img = pygame.image.load("GUI/image/cards/"+me[0][0]+".jpg")
+        img = pygame.image.load(path_to_cards+me[0][0]+".jpg")
         img = pygame.transform.scale(img, (width, height))
         screen.blit(img, (downbase[0]+20+width*2,downbase[1]))
     if len(opposite)>0:
-        img = pygame.image.load("GUI/image/cards/"+opposite[0][0]+".jpg")
+        img = pygame.image.load(path_to_cards+opposite[0][0]+".jpg")
         img2 = pygame.transform.rotate(img, 180)
         img2 = pygame.transform.scale(img2, (width, height))
         screen.blit(img2, (upbase[0]-20-width*2,upbase[1]))
     pygame.display.flip()
 
 def grdeck(screen,me,opposite):
-    img = pygame.image.load("GUI/image/uramen/grura.jpg")
+    img = pygame.image.load(path_to_uramen+"grura.jpg")
     if len(me)>0:
         img = pygame.transform.scale(img, (width, height))
         screen.blit(img, (downbase[0]+20+width*2,downbase[1]+10+height))
@@ -50,9 +41,9 @@ def grdeck(screen,me,opposite):
 def manazone(screen,me,opposite):
     for i in range(len(me)):
         if me[i][2]:
-            img = pygame.image.load("GUI/image/uramen/ura.jpg")
+            img = pygame.image.load(path_to_uramen+"ura.jpg")
         else:
-            img = pygame.image.load("GUI/image/cards/"+me[i][0][0]+".jpg")
+            img = pygame.image.load(path_to_cards+me[i][0][0]+".jpg")
         img = pygame.transform.scale(img, (width, height))
         if me[i][1]:
             img = pygame.transform.rotate(img, 270)
@@ -62,9 +53,9 @@ def manazone(screen,me,opposite):
             screen.blit(img1, (downbase[0]+width+10-50*i,downbase[1]+10+height))
     for i in range(len(opposite)):
         if opposite[i][2]:
-            img = pygame.image.load("GUI/image/uramen/ura.jpg")
+            img = pygame.image.load(path_to_uramen+"ura.jpg")
         else:
-            img = pygame.image.load("GUI/image/cards/"+opposite[i][0][0]+".jpg")
+            img = pygame.image.load(path_to_cards+opposite[i][0][0]+".jpg")
         img = pygame.transform.scale(img, (width, height))
         if opposite[i][1]:
             img = pygame.transform.rotate(img, 90)
@@ -77,9 +68,9 @@ def manazone(screen,me,opposite):
 def battlezone(screen,me,opposite):
     for i in range(len(me)):
         if me[i][2]:
-            img = pygame.image.load("GUI/image/uramen/ura.jpg")
+            img = pygame.image.load(path_to_uramen+"ura.jpg")
         else:
-            img = pygame.image.load("GUI/image/cards/"+me[i][0][0]+".jpg")
+            img = pygame.image.load(path_to_cards+me[i][0][0]+".jpg")
         img = pygame.transform.scale(img, (width, height))
         if any(substring in me[i][0][0] for substring in ["_d2f_", "_df_", "_drf_", "_dgf_", "_sf_", "_skf_", "_kf_", "_dmf", "_hf", "_dsf_", "_mf_", "_t2f_", "_ff_", "_lf_", "_zc_"]):
             img = pygame.transform.rotate(img, 90)
@@ -95,9 +86,9 @@ def battlezone(screen,me,opposite):
                 screen.blit(img, (upbase[0]-20-width*2+(10+width)*i,downbase[1]-(height+10)))
     for i in range(len(opposite)):
         if opposite[i][2]:
-            img = pygame.image.load("GUI/image/uramen/ura.jpg")
+            img = pygame.image.load(path_to_uramen+"ura.jpg")
         else:
-            img = pygame.image.load("GUI/image/cards/"+opposite[i][0][0]+".jpg")
+            img = pygame.image.load(path_to_cards+opposite[i][0][0]+".jpg")
         img = pygame.transform.scale(img, (width, height))
         if any(substring in opposite[i][0][0] for substring in ["_d2f_", "_df_", "_drf_", "_dgf_", "_sf_", "_skf_", "_kf_", "_dmf", "_hf", "_dsf_", "_mf_", "_t2f_", "_ff_", "_lf_", "_ds_"]):
             img= pygame.transform.rotate(img, 270)
@@ -118,11 +109,11 @@ def battlezone(screen,me,opposite):
 
 def graveyard(screen,me,opposite):
     if len(me)>0:
-        img = pygame.image.load("GUI/image/cards/"+me[0][0]+".jpg")
+        img = pygame.image.load(path_to_cards+me[0][0]+".jpg")
         img = pygame.transform.scale(img, (width, height))
         screen.blit(img, (downbase[0]+10+width,downbase[1]))
     if len(opposite)>0:
-        img = pygame.image.load("GUI/image/cards/"+opposite[0][0]+".jpg")
+        img = pygame.image.load(path_to_cards+opposite[0][0]+".jpg")
         img2 = pygame.transform.rotate(img, 180)
         img2 = pygame.transform.scale(img2, (width, height))
         screen.blit(img2, (upbase[0]-10-width,upbase[1]))
@@ -610,9 +601,9 @@ def overlap2(save,flag,key,tmp,up,surface):
 
 def showcard(screen,card,flag,key):
     if flag==1:
-        tmp= pygame.image.load("GUI/image/uramen/ura.jpg")
+        tmp= pygame.image.load(path_to_uramen+"ura.jpg")
     elif flag==2:
-        tmp=pygame.image.load("GUI/image/cards/"+card[0][0]+".jpg")
+        tmp=pygame.image.load(path_to_cards+card[0][0]+".jpg")
         pixels = pygame.PixelArray(tmp)
         for y in range(tmp.get_height()):
             for x in range(tmp.get_width()):
@@ -621,7 +612,7 @@ def showcard(screen,card,flag,key):
                 pixels[x][y] = (gray, gray, gray)
         del pixels
     elif flag==3:
-        tmp=pygame.image.load("GUI/image/uramen/ura.jpg")
+        tmp=pygame.image.load(path_to_uramen+"ura.jpg")
         pixels = pygame.PixelArray(tmp)
         for y in range(tmp.get_height()):
             for x in range(tmp.get_width()):
@@ -631,9 +622,9 @@ def showcard(screen,card,flag,key):
         del pixels
     else:
         if key in [2,3,6,7,8,9,20,21]:
-            tmp=pygame.image.load("GUI/image/cards/"+card[0][0]+".jpg")
+            tmp=pygame.image.load(path_to_cards+card[0][0]+".jpg")
         else:
-            tmp=pygame.image.load("GUI/image/cards/"+card[0]+".jpg")
+            tmp=pygame.image.load(path_to_cards+card[0]+".jpg")
     tmp=pygame.transform.scale(tmp, (500, 720))
     screen.blit(tmp, (110,140))
     pygame.display.flip()
@@ -1622,7 +1613,7 @@ def showshield(save,screen,flag,key,debug):
 
 def sshield(screen):
     for i in range(5):
-        img = pygame.image.load("GUI/image/uramen/ura.jpg")
+        img = pygame.image.load(path_to_uramen+"ura.jpg")
         img = pygame.transform.scale(img, (width, height))
         img2 = pygame.transform.rotate(img, 180)
         img2 = pygame.transform.scale(img2, (width, height))
@@ -1633,7 +1624,7 @@ def sshield(screen):
 
 #表向きカードが考慮されていませんよ
 def shield(screen,flag,save):
-    img = pygame.image.load("GUI/image/uramen/ura.jpg")
+    img = pygame.image.load(path_to_uramen+"ura.jpg")
     if flag:
         for i in range(len(save[2])): 
             img = pygame.transform.scale(img, (width, height))
@@ -1773,18 +1764,17 @@ def decklist(screen,flag,advance,deckimg):
     screen.blit(gTxt, (412+(field[0]-200)//2,830))
     num=1
     #なおす
-    RootPass="GUI/image/cards/"
     pygame.draw.rect(screen, (255,255,255), pygame.Rect(200,180,500,620))
     pygame.draw.rect(screen, (255,255,255), pygame.Rect(850,180,500,620))
     for i in range(len(deckimg[num-1])):
         cardpass=deckimg[num-1][i]
-        Pass=RootPass+cardpass+".jpg"
+        Pass=path_to_cards+cardpass+".jpg"
         img = pygame.image.load(Pass)
         img = pygame.transform.scale(img, card)
         screen.blit(img, (200+card[0]*(i%div), 180+card[1]*(i//div)))
     for i in range(len(deckimg[num])):
         cardpass=deckimg[num][i]
-        Pass=RootPass+cardpass+".jpg"
+        Pass=path_to_cards+cardpass+".jpg"
         img = pygame.image.load(Pass)
         img = pygame.transform.scale(img, card)
         screen.blit(img, (850+card[0]*(i%div), 180+card[1]*(i//div)))
@@ -1821,13 +1811,13 @@ def decklist(screen,flag,advance,deckimg):
                     pygame.draw.rect(screen, (255,255,255), pygame.Rect(850,180,500,620))
                     for i in range(len(deckimg[num-1])):
                         cardpass=deckimg[num-1][i]
-                        Pass=RootPass+cardpass+".jpg"
+                        Pass=path_to_cards+cardpass+".jpg"
                         img = pygame.image.load(Pass)
                         img = pygame.transform.scale(img, card)
                         screen.blit(img, (200+card[0]*(i%div), 180+card[1]*(i//div)))
                     for i in range(len(deckimg[num])):
                         cardpass=deckimg[num][i]
-                        Pass=RootPass+cardpass+".jpg"
+                        Pass=path_to_cards+cardpass+".jpg"
                         img = pygame.image.load(Pass)
                         img = pygame.transform.scale(img, card)
                         screen.blit(img, (850+card[0]*(i%div), 180+card[1]*(i//div)))
