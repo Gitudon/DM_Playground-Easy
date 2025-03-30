@@ -4,5 +4,5 @@ set c1=%CD%
 cd %~d0%~p0
 cd ../
 uv add -r ./requirements.txt
-uv run "./GUI/dmp.py"
+uv run "./src/dmp.py"
 cd %c1%

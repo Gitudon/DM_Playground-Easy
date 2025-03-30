@@ -1,5 +1,6 @@
 **/__pycache__/**
-/dmmemo.txt
-/fonts.txt
-/uv.lock
 *.pyc
+/dev
+/logs
+/uv.lock
+/fonts.txt
