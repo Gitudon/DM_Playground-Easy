@@ -980,7 +980,7 @@ def cardinfo(cardkey,save,screen,debug,tmp,current,end,flag,cards,flag2,key,inde
                                 rect(screen,True)
                                 printcards(tmp[current],screen,flag,cards,flag2)
                                 page(save,screen,debug,tmp,current,end,flag,save[key],flag2,key,index)
-                                return     
+                                return
                     if key in [8,9]:
                         for i in range(9):
                             if 145+80*i<=y<=215+80*i:
@@ -1561,13 +1561,13 @@ def tmpmake(cards,mode):
             else:
                 buf="cards/"+cards[i][0][0]
         if i<=23:
-            tmp[0].append("GUI/image/"+buf+".jpg")
+            tmp[0].append("resources/images/"+buf+".jpg")
         elif i<=47:
-            tmp[1].append("GUI/image/"+buf+".jpg")
+            tmp[1].append("resources/images/"+buf+".jpg")
         elif i<=71:
-            tmp[2].append("GUI/image/"+buf+".jpg")
+            tmp[2].append("resources/images/"+buf+".jpg")
         else:
-            tmp[3].append("GUI/image/"+buf+".jpg")
+            tmp[3].append("resources/images/"+buf+".jpg")
     return tmp
 
 def showcards(save,screen,flag,key,debug):
