@@ -5,7 +5,7 @@ import carddict
 #入力をリダイレクト
 def main():
     deck=[]
-    f=open('GUI/etc/in/listinput.txt','r', encoding='utf-8')
+    f=open('inputs/listinput.txt','r', encoding='utf-8')
     cardlist=f.readlines()
     i=0
     while True:
@@ -24,7 +24,7 @@ def main():
         i+=1
     i+=1
     num=cardlist[i]
-    with open('GUI/decks/deck'+str(num)+'.txt','w', encoding='utf-8') as o:
+    with open('resources/decks/deck'+str(num)+'.txt','w', encoding='utf-8') as o:
         print(*deck,file=o)
     print(len(deck))
 

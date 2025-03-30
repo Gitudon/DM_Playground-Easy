@@ -142,8 +142,7 @@ def Easy(save,screen):
                     elif 130<=y<=180:
                         showcards(save,screen,True,0,debug)
                     elif 190<=y<=240:
-                        draw_1="b_s_002"
-                        save=card[draw_1](save,True)
+                        save=draw(1,save,True)
                     elif 250<=y<=300:
                         save=addmana(1,save,True,False,screen,debug)
                     elif 310<=y<=360:
@@ -159,20 +158,18 @@ def Easy(save,screen):
                         recover(save,screen,debug)
                     elif 610<=y<=660:
                         save=swap(save)
-                        mana_all="rg_c_004"
-                        save=card[mana_all](save,True,"cip")
-                        untap_all="r_c_010"
-                        save=card[untap_all](save,True,"cip")
-                        draw_1="b_s_002"
-                        save=card[draw_1](save,True)
+                        for i in range(len(save[6])):
+                            save[6][i][1]=False
+                        for i in range(len(save[8])):
+                            save[8][i][1]=False
+                        save=draw(1,save,True)
                         recover(save,screen,debug)
                     elif 670<=y<=720:
-                        mana_all="rg_c_004"
-                        save=card[mana_all](save,True,"cip")
-                        untap_all="r_c_010"
-                        save=card[untap_all](save,True,"cip")
-                        draw_1="b_s_002"
-                        save=card[draw_1](save,True)
+                        for i in range(len(save[6])):
+                            save[6][i][1]=False
+                        for i in range(len(save[8])):
+                            save[8][i][1]=False
+                        save=draw(1,save,True)
                         recover(save,screen,debug)
                     # elif 730<=y<=780:
                     # elif 790<=y<=840:
