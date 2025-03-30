@@ -5,9 +5,6 @@ import sys
 from consts.CONSTS import *
 from consts.PATHS import *
 
-#不必要な関数を削除！
-#不必要なコメントを削除！
-
 def deck(screen,me,opposite):
     img = pygame.image.load(path_to_uramen+"ura.jpg")
     if len(me)>0:
