@@ -422,7 +422,7 @@ def bochiokuri(n,save,flag,screen,debug):
                 print("You can't put a card.")
     return save
 
-def putmana(save,card,flag,crystal,zone):
+def putmana(save,card,flag,crystal):
     if flag:
         if "_grc_" in card[0]:
             save[14].append(card)
@@ -432,22 +432,16 @@ def putmana(save,card,flag,crystal,zone):
             tmp=[card,False,False]
             tap=0
             #zone:バトルゾーンからマナ送りか
-            if zone:
-                if any(substring in card[0] for substring in ["_cs_", "_ncs_", "_ss_"]):
-                    tap=max(len(card[6][0]),len(card[6][1]))
-                else:
-                    tap=len(card[6])
+            if any(substring in card[0] for substring in ["_cs_", "_ncs_", "_ss_"]):
+                buf=[]
+                for a in card[2][0]:
+                    buf.append(a)
+                for b in card[2][1]:
+                    buf.append(b)
+                u_buf=list(set(buf))
+                tap=len(u_buf)
             else:
-                if any(substring in card[0] for substring in ["_cs_", "_ncs_", "_ss_"]):
-                    buf=[]
-                    for a in card[6][0]:
-                        buf.append(a)
-                    for b in card[6][1]:
-                        buf.append(b)
-                    u_buf=list(set(buf))
-                    tap=len(u_buf)
-                else:
-                    tap=len(card[6])
+                tap=len(card[2])
             if tap>=2:
                 tmp[1]=True
             if crystal:
@@ -461,22 +455,16 @@ def putmana(save,card,flag,crystal,zone):
         else:
             tmp=[card,False,False]
             tap=0
-            if zone:
-                if any(substring in card[0] for substring in ["_cs_", "_ncs_", "_ss_"]):
-                    tap=len(card[6][0])
-                else:
-                    tap=len(card[6])
+            if any(substring in card[0] for substring in ["_cs_", "_ncs_", "_ss_"]):
+                buf=[]
+                for a in card[2][0]:
+                    buf.append(a)
+                for b in card[2][1]:
+                    buf.append(b)
+                u_buf=list(set(buf))
+                tap=len(u_buf)
             else:
-                if any(substring in card[0] for substring in ["_cs_", "_ncs_", "_ss_"]):
-                    buf=[]
-                    for a in card[6][0]:
-                        buf.append(a)
-                    for b in card[6][1]:
-                        buf.append(b)
-                    u_buf=list(set(buf))
-                    tap=len(u_buf)
-                else:
-                    tap=len(card[6])
+                tap=len(card[2])
             if tap>=2:
                 tmp[1]=True
             if crystal:
@@ -488,7 +476,7 @@ def addmana(n,save,flag,crystal,screen,debug):
     if flag:
         for _ in range(n):
             if save[0]!=[]:
-                save=putmana(save,save[0][0],flag,crystal,False)
+                save=putmana(save,save[0][0],flag,crystal)
                 save[0] = save[0][1:]
                 recover(save,screen,debug)
             else:
@@ -496,7 +484,7 @@ def addmana(n,save,flag,crystal,screen,debug):
     else:
         for _ in range(n):
             if save[1]!=[]:
-                save=putmana(save,save[1][0],flag,crystal,False)
+                save=putmana(save,save[1][0],flag,crystal)
                 save[1] = save[1][1:]
                 recover(save,screen,debug)
             else:
@@ -767,7 +755,7 @@ def cardinfo(cardkey,save,screen,debug,tmp,current,end,flag,cards,flag2,key,inde
                                     #マナゾーンに置く
                                     crystal=False
                                     #crystal=choose(screen,"水晶マナにしますか？")
-                                    save=putmana(save,card,player,crystal,False)
+                                    save=putmana(save,card,player,crystal)
                                 elif i==3:
                                     #墓地に置く
                                     save=putgrave(save,card,True)
@@ -826,7 +814,7 @@ def cardinfo(cardkey,save,screen,debug,tmp,current,end,flag,cards,flag2,key,inde
                                     #マナゾーンに置く
                                     crystal=False
                                     #crystal=choose(screen,"水晶マナにしますか？")
-                                    save=putmana(save,card[0],player,crystal,False)
+                                    save=putmana(save,card[0],player,crystal)
                                     del save[key][cardkey]
                                 elif i==4:
                                     #山札に送る
@@ -869,7 +857,7 @@ def cardinfo(cardkey,save,screen,debug,tmp,current,end,flag,cards,flag2,key,inde
                                     #マナゾーンに置く
                                     crystal=False
                                     #crystal=choose(screen,"水晶マナにしますか？")
-                                    save=putmana(save,card,player,crystal,False)
+                                    save=putmana(save,card,player,crystal)
                                 elif i==2:
                                     #墓地に置く
                                     save=putgrave(save,card,True)
@@ -997,7 +985,7 @@ def cardinfo(cardkey,save,screen,debug,tmp,current,end,flag,cards,flag2,key,inde
                                     for i in range(len(card[3])):
                                         crystal=False
                                         #crystal=choose(screen,"水晶マナにしますか？")
-                                        save=putmana(save,card[3][i],player,crystal,True)
+                                        save=putmana(save,card[3][i],player,crystal)
                                     del save[key][cardkey]
                                 elif i==3:
                                     #墓地に置く
@@ -1080,7 +1068,7 @@ def cardinfo(cardkey,save,screen,debug,tmp,current,end,flag,cards,flag2,key,inde
                                     #マナゾーンに置く
                                     crystal=False
                                     #crystal=choose(screen,"水晶マナにしますか？")
-                                    save=putmana(save,card,player,crystal,False)
+                                    save=putmana(save,card,player,crystal)
                                 elif i==3:
                                     #山札に送る
                                     up=choose(screen,"デッキの上に置きますか？")
@@ -1134,7 +1122,7 @@ def cardinfo(cardkey,save,screen,debug,tmp,current,end,flag,cards,flag2,key,inde
                                     #マナゾーンに置く
                                     crystal=False
                                     #crystal=choose(screen,"水晶マナにしますか？")
-                                    save=putmana(save,card,player,crystal,False)
+                                    save=putmana(save,card,player,crystal)
                                 elif i==3:
                                     #墓地に置く
                                     save=putgrave(save,card,True)
@@ -1178,7 +1166,7 @@ def cardinfo(cardkey,save,screen,debug,tmp,current,end,flag,cards,flag2,key,inde
                                     #マナゾーンに置く
                                     crystal=False
                                     #crystal=choose(screen,"水晶マナにしますか？")
-                                    save=putmana(save,card,player,crystal,True)
+                                    save=putmana(save,card,player,crystal)
                                 elif i==3:
                                     #墓地に置く
                                     save=putgrave(save,card,player)
@@ -1230,7 +1218,7 @@ def cardinfo(cardkey,save,screen,debug,tmp,current,end,flag,cards,flag2,key,inde
                                     #マナゾーンに置く
                                     crystal=False
                                     #crystal=choose(screen,"水晶マナにしますか？")
-                                    save=putmana(save,card,player,crystal,False)
+                                    save=putmana(save,card,player,crystal)
                                 elif i==3:
                                     #墓地に置く
                                     save=putgrave(save,card,True)
@@ -1281,7 +1269,7 @@ def cardinfo(cardkey,save,screen,debug,tmp,current,end,flag,cards,flag2,key,inde
                                     #マナゾーンに置く
                                     crystal=False
                                     #crystal=choose(screen,"水晶マナにしますか？")
-                                    save=putmana(save,card[0],player,crystal,False)
+                                    save=putmana(save,card[0],player,crystal)
                                 elif i==2:
                                     #墓地に置く
                                     save=putgrave(save,card[0],True)
@@ -1318,7 +1306,7 @@ def cardinfo(cardkey,save,screen,debug,tmp,current,end,flag,cards,flag2,key,inde
                                     save[key3][index][2]=False
                                     if save[key3][index][0][0]=="r_k_001":
                                         del save[key3][index]
-                                        kndn=['r_kc_001', '伝説の禁断 ドキンダムX', [], 99, None, 99999, ['r'], False, True, False, True, False, 'kc', ['T-Breaker'], False, False]
+                                        kndn=['r_kc_001', '伝説の禁断 ドキンダムX', ['r']]
                                         save=put(save,kndn,player)
                                     elif  save[key3][index][0][0]=="rg_skf_001":
                                         del save[key3][index]
@@ -1336,11 +1324,7 @@ def printcards(tmp,screen,mode,cards,flag):
         flg=False
         t[i]=pygame.image.load(tmp[i])
         t[i]=pygame.transform.scale(t[i], (w, h))
-        if mode==1:
-            if cards[i][11]:
-                t[i]=pygame.transform.rotate(t[i], 270)
-                flg=True
-        elif mode==2:
+        if mode==2:
             if cards[i][1]:
                 t[i]=pygame.transform.rotate(t[i], 270)
                 flg=True
@@ -1626,7 +1610,7 @@ def sshield(screen):
 def shield(screen,flag,save):
     img = pygame.image.load(path_to_uramen+"ura.jpg")
     if flag:
-        for i in range(len(save[2])): 
+        for i in range(len(save[2])):
             img = pygame.transform.scale(img, (width, height))
             screen.blit(img, ((downbase[0]-110)-width*i, downbase[1]))
     else:
@@ -2081,7 +2065,7 @@ def dmphelp(screen,save,debug):
     return
 
 def kndnbigbun(save,flag):
-    card=['rd_skc_001', '終焉の禁断 ドルマゲドンX', [], 999, None, 999999, ['r','d'], False, True, False, True, False, 'skc', ['T-Breaker'], False, False]
+    card=['rd_skc_001', '終焉の禁断 ドルマゲドンX', ['r','d']]
     #禁断コアが未実装
     tmp=[card,False,False,[card],[],-1,1,0]
     if flag:
@@ -2091,7 +2075,7 @@ def kndnbigbun(save,flag):
     return save
 
 def zeronbantan(save,flag):
-    card=['d_zc_001', '零龍', ['マスター・ドラゴンZ'], 0, None, 0, ['d'], False, True, False, True, False, 'zc', ['World-Breaker'], False, False]
+    card=['d_zc_001', '零龍', ['d']]
     tmp=[card,False,False,[card],[],-1,1,0]
     if flag:
         save[8].append(tmp)
